@@ -7,7 +7,7 @@ def compileAuthorsDate(dictfiles, lsttokens, repos):
     ct = 0  # token counter
     for repo in repos:
         repo_name = repo.split('/')[-1]
-        with open(f'csv/file_{repo_name}.csv') as f:
+        with open(f'partie1/{repo_name}.csv') as f:
             reader = csv.reader(f)
             next(reader)
             for row in reader:
@@ -34,16 +34,28 @@ def compileAuthorsDate(dictfiles, lsttokens, repos):
                             dictfiles[file_path] = []
                         dictfiles[file_path].append(info)
                     ipage+=1
-        print(dictfiles)
                 
 
-repo = 'scottyab/rootbeer'
+# repo = 'scottyab/rootbeer'
 # put your tokens here
 lstTokens = ['']
 
 
 dictfiles = dict()
-compileAuthorsDate(dictfiles, lstTokens, ['scottyab/rootbeer'])
+compileAuthorsDate(dictfiles, lstTokens, ['k9mail/k-9'])
+
+fileoutput = 'data_k-9.csv'
+rows = ["Filename", "Author", "Commit Date"]
+fileCSV = open(fileoutput, 'w')
+writer = csv.writer(fileCSV)
+writer.writerow(rows)
+
+for filename, infos in dictfiles.items():
+    for info in infos:
+        rows = [filename, info[0], info[1]]
+        writer.writerow(rows)
+fileCSV.close()
+print("Done")
 # countfiles(dictfiles, lstTokens, repo)
 # print('Total number of files: ' + str(len(dictfiles)))
 
